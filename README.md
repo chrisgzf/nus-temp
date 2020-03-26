@@ -8,16 +8,16 @@ easily submit your temperature to NUS's temperature declaration system.
 ```bash
 $ git clone https://github.com/chrisgzf/nus-temp
 $ cd nus-temp
-$ python Declare.py
+$ python declare.py
 ```
 
-OR just download `Declare.py` using your web-browser and run it.
+OR just download `declare.py` using your web-browser and run it.
 
 ## How to use
 
 To run the script, simply run:
 ```bash
-$ python Declare.py
+$ python declare.py
 ```
 On your first run, you will set-up your NUSNET credentials.
 
@@ -25,17 +25,17 @@ On your subsequent runs, running this script will immediately submit a randomly-
 temperature. Please note that this is only for testing! Do submit your actual temperature
 with
 ```bash
-$ python Declare.py <your temp here>
+$ python declare.py <your temp here>
 ```
 
 To see what options there are, run:
 ```bash
-$ python Declare.py -h
+$ python declare.py -h
 ```
 
 The options that are available are:
 ```
-usage: Declare.py [-h] [-v] [-d DATE] [-t TIME] [-s SYM] [TEMP]
+usage: declare.py [-h] [-v] [-d DATE] [-t TIME] [-s SYM] [TEMP]
 
 Submits NUS temperature declaration
 
@@ -56,7 +56,7 @@ optional arguments:
 are uncomfortable with your credentials being stored in such a manner, either (1) make a PR to
 implement a better way, or (2) don't use this.
 1. The aim of this tool is to make it fast and easy to submit your temperature declaration. You
-may have noticed that if you simply run `python Declare.py` without any arguments, a random
+may have noticed that if you simply run `python declare.py` without any arguments, a random
 temperature is generated and submitted. This is only for testing purposes! Please do use this
 script as a means of helping you to submit your actual body temperature!
 1. This script works at the time of publishing this, but it is your onus to check if the right
