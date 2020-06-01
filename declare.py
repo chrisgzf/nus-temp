@@ -53,7 +53,7 @@ def auth_and_get_cookie(user, password):
         return response.cookies["JSESSIONID"]
 
 
-def submit_temp(temp, date, time_of_day, sympt_flag, cookie):
+def submit_temp(temp, date, time_of_day, sympt_flag, fam_sympt_flag, cookie):
     cookie = {"JSESSIONID": cookie}
     endpoint = "https://myaces.nus.edu.sg/htd/htd"
     data = {
@@ -61,11 +61,12 @@ def submit_temp(temp, date, time_of_day, sympt_flag, cookie):
         "tempDeclOn": date,
         "declFrequency": time_of_day,
         "temperature": temp,
-        "symptomsFlag": sympt_flag
+        "symptomsFlag": sympt_flag,
+        "familySymptomsFlag": fam_sympt_flag
     }
 
     logging.info(
-        f"Submitting temperature {temp} degrees for {time_of_day}M on {date} (Symptoms: {sympt_flag})"
+        f"Submitting temperature {temp} degrees for {time_of_day}M on {date} (Symptoms: {sympt_flag}, Same household with symptoms: {fam_sympt_flag})"
     )
     response = requests.post(endpoint, cookies=cookie, data=data)
 
@@ -131,11 +132,6 @@ if __name__ == "__main__":
                         "--verbose",
                         help="verbose - enable debug messages",
                         action="store_true")
-    parser.add_argument("-d",
-                        "--date",
-                        type=str,
-                        help="date in DD/MM/YYYY. defaults to today's date",
-                        default=get_date())
     parser.add_argument(
         "-t",
         "--time",
@@ -147,6 +143,12 @@ if __name__ == "__main__":
         "--sym",
         type=str,
         help="whether you have symptoms - 'Y' or 'N'. defaults to no",
+        default="N")
+    parser.add_argument(
+        "-f",
+        "--famsym",
+        type=str,
+        help="whether someone in the same household with symptoms - 'Y' or 'N'. defaults to no",
         default="N")
     args = parser.parse_args()
     logging.basicConfig(format="[%(levelname)s] %(asctime)s: %(message)s",
@@ -160,7 +162,8 @@ if __name__ == "__main__":
     user, password = read_credentials()
     session_cookie = auth_and_get_cookie(user, password)
     submit_temp(temp=args.temp,
-                date=args.date,
+                date=get_date(),
                 time_of_day=args.time,
                 sympt_flag=args.sym,
+                fam_sympt_flag=args.sym,
                 cookie=session_cookie)

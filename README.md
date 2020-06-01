@@ -35,7 +35,7 @@ $ python declare.py -h
 
 The options that are available are:
 ```
-usage: declare.py [-h] [-v] [-d DATE] [-t TIME] [-s SYM] [TEMP]
+usage: declare.py [-h] [-v] [-t TIME] [-s SYM] [TEMP]
 
 Submits NUS temperature declaration
 
@@ -43,11 +43,11 @@ positional arguments:
   TEMP                  temperature you would like to declare. leave blank for random (default: 36.3)
 
 optional arguments:
-  -h, --help            show this help message and exit
-  -v, --verbose         verbose - enable debug messages (default: False)
-  -d DATE, --date DATE  date in DD/MM/YYYY. defaults to today's date (default: 27/03/2020)
-  -t TIME, --time TIME  time of day - 'A' or 'P'. defaults to current time (default: A)
-  -s SYM, --sym SYM     whether you have symptoms - 'Y' or 'N'. defaults to no (default: N)
+  -h, --help                   show this help message and exit
+  -v, --verbose                verbose - enable debug messages (default: False)
+  -t TIME, --time TIME         time of day - 'A' or 'P'. defaults to current time (default: A)
+  -s SYM, --sym SYM            whether you have symptoms - 'Y' or 'N'. defaults to no (default: N)
+  -f FAMSYM, --famsym FAMSYM   whether someone in the same household with symptoms - 'Y' or 'N'. defaults to no (default: N)
 ```
 
 ## Disclaimer
