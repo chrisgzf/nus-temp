@@ -3,6 +3,7 @@
 import os
 import sys
 import random
+import time
 import logging
 import getpass
 import base64
@@ -159,6 +160,7 @@ if __name__ == "__main__":
                             logging.StreamHandler()
                         ])
 
+    time.sleep(random.randrange(180, 1000))
     user, password = read_credentials()
     session_cookie = auth_and_get_cookie(user, password)
     submit_temp(temp=args.temp,
