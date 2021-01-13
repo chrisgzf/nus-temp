@@ -160,8 +160,9 @@ if __name__ == "__main__":
                             logging.StreamHandler()
                         ])
 
-    time.sleep(random.randrange(180, 1000))
+    
     user, password = read_credentials()
+    time.sleep(random.randrange(180, 1000))
     session_cookie = auth_and_get_cookie(user, password)
     submit_temp(temp=args.temp,
                 date=get_date(),
