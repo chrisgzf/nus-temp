@@ -139,6 +139,7 @@ if __name__ == "__main__":
         type=str,
         help="whether someone in the same household with symptoms - 'Y' or 'N'. defaults to no",
         default="N")
+    parser.add_argument("--no-random-timer", action="store_true")
     args = parser.parse_args()
     logging.basicConfig(format="[%(levelname)s] %(asctime)s: %(message)s",
                         datefmt="%d/%m/%Y %I:%M:%S %p",
@@ -149,7 +150,8 @@ if __name__ == "__main__":
                         ])
 
     user, password = read_credentials()
-    time.sleep(random.randrange(180, 1000))
+    if not args.no_random_timer:
+        time.sleep(random.randrange(180, 1000))
     session_cookie = auth_and_get_cookie(user, password)
     submit_temp(date=get_date(),
                 time_of_day=args.time,
