@@ -21,10 +21,6 @@ def get_time_of_day():
     return "P" if hr >= 12 else "A"
 
 
-def get_rand_temp():
-    return round(random.uniform(35.8, 37.2), 1)
-
-
 def auth_and_get_cookie(user, password):
     VAFS_CLIENT_ID = "97F0D1CACA7D41DE87538F9362924CCB-184318"
     endpoint = "https://vafs.nus.edu.sg/adfs/oauth2/authorize"
@@ -54,20 +50,19 @@ def auth_and_get_cookie(user, password):
         return response.cookies["JSESSIONID"]
 
 
-def submit_temp(temp, date, time_of_day, sympt_flag, fam_sympt_flag, cookie):
+def submit_temp(date, time_of_day, sympt_flag, fam_sympt_flag, cookie):
     cookie = {"JSESSIONID": cookie}
     endpoint = "https://myaces.nus.edu.sg/htd/htd"
     data = {
         "actionName": "dlytemperature",
         "tempDeclOn": date,
         "declFrequency": time_of_day,
-        "temperature": temp,
         "symptomsFlag": sympt_flag,
         "familySymptomsFlag": fam_sympt_flag
     }
 
     logging.info(
-        f"Submitting temperature {temp} degrees for {time_of_day}M on {date} (Symptoms: {sympt_flag}, Same household with symptoms: {fam_sympt_flag})"
+        f"Submitting for {time_of_day}M on {date} (Symptoms: {sympt_flag}, Same household with symptoms: {fam_sympt_flag})"
     )
     response = requests.post(endpoint, cookies=cookie, data=data)
 
@@ -122,13 +117,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Submits NUS temperature declaration",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument(
-        "temp",
-        metavar="TEMP",
-        type=float,
-        help="temperature you would like to declare. leave blank for random",
-        default=get_rand_temp(),
-        nargs="?")
     parser.add_argument("-v",
                         "--verbose",
                         help="verbose - enable debug messages",
@@ -160,12 +148,10 @@ if __name__ == "__main__":
                             logging.StreamHandler()
                         ])
 
-    
     user, password = read_credentials()
     time.sleep(random.randrange(180, 1000))
     session_cookie = auth_and_get_cookie(user, password)
-    submit_temp(temp=args.temp,
-                date=get_date(),
+    submit_temp(date=get_date(),
                 time_of_day=args.time,
                 sympt_flag=args.sym,
                 fam_sympt_flag=args.sym,
