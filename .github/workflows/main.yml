@@ -25,7 +25,7 @@ jobs:
           pip install -r requirements.txt
       - name: execute py script
         run: |
-          python declare.py --no-random-timer
+          python declare.py --no-random-timer --gh-action
         env:
           TEMP_DECLARE_USERNAME: ${{ secrets.TEMP_DECLARE_USERNAME }}
           TEMP_DECLARE_PASSWORD: ${{ secrets.TEMP_DECLARE_PASSWORD }}
