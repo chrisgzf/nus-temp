@@ -3,7 +3,8 @@ name: declare
 # Controls when the workflow will run
 on:
   schedule:
-    - cron: "0 */8 * * *"
+    - cron: "33 12 * * *" # 8.33am every day
+    - cron: "3 7 * * *" # 3.03pm every day
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
