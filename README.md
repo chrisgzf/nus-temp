@@ -50,18 +50,28 @@ optional arguments:
   -f FAMSYM, --famsym FAMSYM   whether someone in the same household with symptoms - 'Y' or 'N'. defaults to no (default: N)
 ```
 
+## Use as Github Action
+
+1. Fork this repo
+2. In **your own** fork, under Settings-Secrets, add two secrets: `TEMP_DECLARE_USERNAME` and `TEMP_DECLARE_PASSWORD`
+3. Check under Actions, there is an action called "declare"
+
 ## Disclaimer
 
 1. This script stores your NUSNET credentials in plaintext in a file called `creds.txt`. If you
 are uncomfortable with your credentials being stored in such a manner, either (1) make a PR to
 implement a better way, or (2) don't use this.
-1. The aim of this tool is to make it fast and easy to submit your temperature declaration. You
+2. The aim of this tool is to make it fast and easy to submit your temperature declaration. You
 may have noticed that if you simply run `python declare.py` without any arguments, a random
 temperature is generated and submitted. This is only for testing purposes! Please do use this
 script as a means of helping you to submit your actual body temperature!
-1. This script works at the time of publishing this, but it is your onus to check if the right
+3. This script works at the time of publishing this, but it is your onus to check if the right
 temperatures have been recorded on the portal. I **will not be responsible** if the script breaks,
 and you end up not submitting your temperature declaration on time.
+4. If you opted to deploy this script as a GitHub action, you should always remember to turn off
+the script and report your status accordingly as soon as you have symptoms or have someone in the
+same household with symptoms. I **will not be responsible** if you face any displinary actions or
+even criminal charges if your declaration is false due to the automatic action.
 
 ## Credits
 
