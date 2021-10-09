@@ -54,7 +54,8 @@ optional arguments:
 
 1. Fork this repo
 2. In **your own** fork, under Settings-Secrets, add two secrets: `TEMP_DECLARE_USERNAME` and `TEMP_DECLARE_PASSWORD`
-3. Check under Actions, there is an action called "declare"
+3. Uncomment `schedule` section in `.github/workflows/main.yml` and configure your preferred declaration time
+4. Check under Actions, there is an action called "declare". You may manually run the action once to see if it works
 
 ## Disclaimer
 
