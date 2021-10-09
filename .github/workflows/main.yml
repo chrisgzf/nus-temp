@@ -1,0 +1,33 @@
+name: declare
+
+# Controls when the workflow will run
+on:
+  # uncomment below for scheduled execution
+  #schedule:
+  #  - cron: "33 12 * * *" # 8.33am (SGT) every day
+  #  - cron: "3 7 * * *" # 3.03pm (SGT) every day
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repo content
+        uses: actions/checkout@v2
+      - name: setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: resolve dependencies
+        run: |
+          pip install -r requirements.txt
+      - name: execute py script
+        run: |
+          python declare.py --no-random-timer --gh-action
+        env:
+          TEMP_DECLARE_USERNAME: ${{ secrets.TEMP_DECLARE_USERNAME }}
+          TEMP_DECLARE_PASSWORD: ${{ secrets.TEMP_DECLARE_PASSWORD }}
