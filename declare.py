@@ -163,7 +163,7 @@ def main():
         user, password = read_credentials()
     else:
         user, password = read_credentials_from_env()
-    if not args.no_random_timer:
+    if (not args.no_random_timer) and (not args.gh_action):
         time.sleep(random.randrange(180, 1000))
     session_cookie = auth_and_get_cookie(user, password)
     submit_temp(date=get_date(),
