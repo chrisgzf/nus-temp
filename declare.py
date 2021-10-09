@@ -74,42 +74,13 @@ def submit_temp(date, time_of_day, sympt_flag, fam_sympt_flag, cookie):
         logging.info("Submitted successfully")
 
 
-def get_credentials():
-    logging.info(
-        "NUSNET credentials not found. Creating a new credential file")
-    print("\nWARNING: Your NUSNET credentials will be saved in plaintext.\n"
-          "This has to be done so that the script can log you in.\n")
-
-    password, verify = "", "_"
-    while password != verify:
-        print(
-            "Please enter your NUSNET username (e0123456, without the nusstu\\): "
-        )
-        user = input()
-        print(
-            "Please enter your NUSNET password and press enter (you will not see what you've typed)"
-        )
-        password = getpass.getpass()
-        print("Again")
-        verify = getpass.getpass()
-        if (password != verify):
-            print("Passwords did not match!\n")
-
-    with open("creds.txt", "wb+") as f:
-        f.write(base64.b64encode(user.encode("ascii")) + b"\n")
-        f.write(base64.b64encode(password.encode("ascii")))
-
-    logging.info("Saved NUSNET credentials in creds.txt")
-    return user, password
-
-
 def read_credentials():
-    if not os.path.exists("creds.txt"):
-        return get_credentials()
+    password = os.getenv("TEMP_DECLARE_PASSWORD")
+    username = os.getenv("TEMP_DECLARE_USERNAME")
+    if password is None or username is None:
+        raise Exception("Please configure your username and password accordingly")
     else:
-        with open("creds.txt", "rb") as f:
-            user = base64.b64decode(f.readline()).decode("ascii").strip()
-            password = base64.b64decode(f.readline()).decode("ascii").strip()
+        print(username)
         return user, password
 
 
