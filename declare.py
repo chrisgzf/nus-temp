@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 
-import os
-import sys
-import random
-import time
-import logging
-import getpass
-import base64
 import argparse
-import requests
+import base64
+import getpass
+import logging
+import os
+import random
+import sys
+import time
 from datetime import datetime
+
+import requests
 
 
 def get_date():
@@ -113,7 +114,16 @@ def read_credentials():
         return user, password
 
 
-if __name__ == "__main__":
+def read_credentials_from_env():
+    password = os.getenv("TEMP_DECLARE_PASSWORD")
+    username = os.getenv("TEMP_DECLARE_USERNAME")
+    if password is None or username is None:
+        raise Exception("Please configure your username and password accordingly")
+    else:
+        return username, password
+
+
+def main():
     parser = argparse.ArgumentParser(
         description="Submits NUS temperature declaration",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -140,6 +150,7 @@ if __name__ == "__main__":
         help="whether someone in the same household with symptoms - 'Y' or 'N'. defaults to no",
         default="N")
     parser.add_argument("--no-random-timer", action="store_true")
+    parser.add_argument("--gh-action", action="store_true")
     args = parser.parse_args()
     logging.basicConfig(format="[%(levelname)s] %(asctime)s: %(message)s",
                         datefmt="%d/%m/%Y %I:%M:%S %p",
@@ -148,8 +159,10 @@ if __name__ == "__main__":
                             logging.FileHandler("temp.log", "a"),
                             logging.StreamHandler()
                         ])
-
-    user, password = read_credentials()
+    if not args.gh_action:
+        user, password = read_credentials()
+    else:
+        user, password = read_credentials_from_env()
     if not args.no_random_timer:
         time.sleep(random.randrange(180, 1000))
     session_cookie = auth_and_get_cookie(user, password)
@@ -158,3 +171,7 @@ if __name__ == "__main__":
                 sympt_flag=args.sym,
                 fam_sympt_flag=args.sym,
                 cookie=session_cookie)
+
+
+if __name__ == "__main__":
+    main()
